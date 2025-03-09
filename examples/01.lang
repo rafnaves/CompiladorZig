@@ -1,0 +1,14 @@
+const std = @import("std");
+
+pub fn main() void {
+    const stdout = std.io.getStdOut().writer();
+
+    var count: u32 = 10;
+    while (count > 0) : (count -= 1) {
+        stdout.print("Count: {}\n", .{count});
+    }
+
+    if (count == 0) {
+        stdout.print("Done!\n", .{});
+    }
+}

@@ -34,6 +34,7 @@ const (
 	SEMI_COLON 
 	COLON 
 	QUESTION 
+	AT
 	COMMA 
 
 	PLUS_PLUS 
@@ -123,6 +124,59 @@ const (
 
 )
 
+var reserved_lu map[string]TokenKind = map[string]TokenKind{
+	"addrspace":       ADDRSPACE,
+	"align":           ALIGN,
+	"allowzero":       ALLOWZERO,
+	"anyframe":        ANYFRAME,
+	"anytype":         ANYTYPE,
+	"asm":             ASM,
+	"async":           ASYNC,
+	"await":           AWAIT,
+	"break":           BREAK,
+	"catch":           CATCH,
+	"comptime":        COMPTIME,
+	"const":           CONST,
+	"continue":        CONTINUE,
+	"defer":           DEFER,
+	"else":            ELSE,
+	"enum":            ENUM,
+	"errdefer":        ERRDEFER,
+	"error":           ERROR,
+	"export":          EXPORT,
+	"extern":          EXTERN,
+	"false":           FALSE,
+	"fn":              FN,
+	"for":             FOR,
+	"if":              IF,
+	"inline":          INLINE,
+	"noalias":         NOALIAS,
+	"nosuspend":       NOSUSPEND,
+	"null":            NULL,
+	"opaque":          OPAQUE,
+	"or":              OR,
+	"orelse":          ORELSE,
+	"packed":          PACKED,
+	"pub":             PUB,
+	"resume":          RESUME,
+	"return":          RETURN,
+	"struct":          STRUCT,
+	"suspend":         SUSPEND,
+	"switch":          SWITCH,
+	"test":            TEST,
+	"threadlocal":     THREADLOCAL,
+	"true":            TRUE,
+	"try":             TRY,
+	"undefined":       UNDEFINED,
+	"union":           UNION,
+	"unreachable":     UNREACHABLE,
+	"usingnamespace":  USINGNAMESPACE,
+	"var":             VAR,
+	"volatile":        VOLATILE,
+	"while":           WHILE,
+}
+
+
 type Token struct {
 	Kind  TokenKind // Antes era `kind`, precisa ser `Kind`
 	Value string    // Antes era `value`, precisa ser `Value`
@@ -167,6 +221,8 @@ func TokenKindString(kind TokenKind) string {
 		return "string"
 	case IDENTIFIER:
 		return "identifier"
+	case AT:
+		return "at" 
 	case OPEN_BRACKET:
 		return "open_bracket"
 	case CLOSE_BRACKET:

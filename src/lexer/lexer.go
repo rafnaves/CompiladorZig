@@ -2,6 +2,7 @@ package lexer
 
 import (
 	"fmt"
+
 	"regexp"
 )
 
@@ -77,8 +78,12 @@ func createLexer (source string) *lexer{
 		source: source,
 		Tokens: make([]Token, 0),
 		patterns: []regexPattern{
+			{regexp.MustCompile(`@`), defaultHandler(AT, "@")},
+			{regexp.MustCompile(`[a-zA-Z_][a-zA-Z0-9_]*`), symbolHandler}, // Correção: crases e removido espaços errados
 			{regexp.MustCompile(`[0-9]+(\.[0-9]+)?`), numberHandler}, // Correção: crases e removido espaços errados
-			{regexp.MustCompile(`\s+`), skipHandler}, // Correção: crases e removido espaços errados
+			{regexp.MustCompile(`"[^"]*"`), stringHandler}, // Correção: crases e removido espaços errados
+			{regexp.MustCompile(`//.*`), skipHandler}, // identifica o comentario e captura todos os caracteres após as duas barras, ate o final da linha
+			{regexp.MustCompile(`\s+`), skipHandler},
 			{regexp.MustCompile(`\[`), defaultHandler(OPEN_BRACKET, "[")}, // Correção: usar `\[` ao invés de '['			
 			{regexp.MustCompile(`\]`), defaultHandler(CLOSE_BRACKET, "]")},
 			{regexp.MustCompile(`\{`), defaultHandler(OPEN_CURLY, "{")},
@@ -118,10 +123,10 @@ func createLexer (source string) *lexer{
 
 func skipHandler(lex *lexer, regex *regexp.Regexp) {
 	match := regex.FindStringIndex(lex.remainder())
-	lex.advanceN(match[1])
-
+	if match != nil {
+		lex.advanceN(match[1])
+	}
 }
-
 
 func numberHandler(lex *lexer, regex *regexp.Regexp) {
 	match := regex.FindString(lex.remainder())
@@ -129,4 +134,23 @@ func numberHandler(lex *lexer, regex *regexp.Regexp) {
 	lex.advanceN(len(match))
 }
 
+func stringHandler(lex *lexer, regex *regexp.Regexp) {
+	match := regex.FindStringIndex(lex.remainder())
+	if match != nil {
+		stringLiteral := lex.remainder()[match[0]:match[1]]
+		lex.push(NewToken(STRING, stringLiteral))
+		lex.advanceN(len(stringLiteral))
+	}
+}
 
+func symbolHandler(lex *lexer, regex *regexp.Regexp) {
+	match := regex.FindString(lex.remainder())
+
+	if kind, exists := reserved_lu[match]; exists {
+		lex.push(NewToken(kind, match))
+	} else {
+		lex.push(NewToken(IDENTIFIER, match))
+	}
+
+	lex.advanceN(len(match))
+}

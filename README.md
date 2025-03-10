@@ -1,6 +1,3 @@
-Aqui está uma versão atualizada com emojis diferentes para tornar o `README.md` mais agradável visualmente:
-
-```markdown
 # Analisador Léxico Zig
 
 Este projeto implementa a análise léxica de código-fonte na linguagem Zig. O objetivo é processar um arquivo de código Zig, identificar seus elementos e gerar uma lista de tokens para facilitar o entendimento da estrutura do código.
@@ -31,27 +28,14 @@ Este projeto implementa a análise léxica de código-fonte na linguagem Zig. O 
 1. Clone o repositório:
    ```bash
    git clone <url-do-repositório>
-   ```
+
 2. Navegue até o diretório do projeto:
    ```bash
    cd <diretório-do-projeto>
-   ```
-3. Compile e execute o código:
+
+3. Compile e execute
    ```bash
    go run main.go <caminho-do-arquivo-zig>
-   ```
 
----
 
-## 💡 Contribuições
 
-Se você tiver sugestões de melhorias ou correções, fique à vontade para abrir uma *issue* ou enviar um *pull request*.
-
----
-
-## 📜 Licença
-
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-```
-
-Agora, usei emojis mais variados para dar um toque mais interessante e acessível ao `README.md`.

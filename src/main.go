@@ -1,18 +1,17 @@
 package main
 
 import (
+	"compilador/src/lexer"
+	"compilador/src/parser"
 	"os"
 
-	"compilador/src/lexer"
+	"github.com/sanity-io/litter"
 )
 
 func main() {
-	bytes, _ := os.ReadFile("./examples/01.lang")
-	source := string(bytes)
+	bytes, _ := os.ReadFile("./examples/02.lang")
+	tokens := lexer.Tokenize(string(bytes))
 
-	tokens := lexer.Tokenize(source)
-
-	for _, token := range tokens {
-		token.Debug()
-	}
+	ast := parser.Parse(tokens)
+	litter.Dump(ast)
 }

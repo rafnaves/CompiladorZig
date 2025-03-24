@@ -20,3 +20,18 @@ func parse_stmt(p *parser) ast.Stmt{
 		Expression: expression,
 	}
 }
+
+func parse_var_decl_stmt(p *parser) ast.Stmt {
+	IsConstant := p.advance().Kind == lexer.CONST
+	varName := p.expectedError(lexer.IDENTIFIER, "Era esperado encontrar o nome da variavel dentro da declaração").Value
+	p.expect(lexer.ASSIGNMENT)
+	assignedValue := parse_expr(p, assignment)
+	p.expect(lexer.SEMI_COLON)
+	
+	return ast.VarDeclStmt{
+		IsConstant: IsConstant,
+		VariableName: varName,
+		AssignedValue: assignedValue,
+	}
+
+}

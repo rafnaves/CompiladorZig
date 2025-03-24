@@ -1,16 +1,15 @@
 package parser
 
 import (
-	"compilador/src/lexer"
 	"compilador/src/ast"
-
+	"compilador/src/lexer"
 )
 
 type binding_power int
 const (
 	defalt_bp binding_power = iota
 	comma
-	assigment
+	assignment
 	logical 
 	relational 
 	additive 
@@ -82,5 +81,11 @@ func createTokenLookups(){
 	nud(lexer.STRING, primary, parse_primary_expr)
 
 	nud(lexer.IDENTIFIER, primary, parse_primary_expr)
+
+
+	//statements
+	//Chama o token
+	stmt(lexer.CONST, parse_var_decl_stmt)
+	stmt(lexer.VAR, parse_var_decl_stmt)
 
 }

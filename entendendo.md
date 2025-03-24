@@ -38,3 +38,28 @@ Tokens que se espera estar entre ou depois de alguma expressão
 ## Lookup Tables
 
 Usando lookup tables junto de funções NUD/LED, consiguimos criar um parser
+
+## Exemplo de sintaxe
+
+Declaração de variaveis em zig tem essa syntax:
+
+Variavel Mútavel :
+var nome: i32 = 42;  // Declara uma variável mutável do tipo `i32` com valor inicial 42
+
+
+Variável Imutável (const):
+const nome: i32 = 42;  // Declara uma constante (imutável) do tipo `i32` com valor inicial 42
+
+Inferência de Tipo
+Zig também pode inferir o tipo com base no valor inicial:
+
+var idade = 25;       // Tipo inferido como `i32`
+const pi = 3.1415;    // Tipo inferido como `f64`
+
+### Ast Schema
+type VarDeclarationStmt struct {
+    identifier string
+    Constant bool
+    AssignedValue Expr
+    ExplicitType Type
+}
